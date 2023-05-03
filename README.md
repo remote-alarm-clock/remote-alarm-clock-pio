@@ -8,7 +8,7 @@ Platform IO code for Remote Alarm Clock
 - Ladeplatine für 3,7V Li-Akkus: Reichelt, https://www.reichelt.de/de/de/entwicklerboards-ladeplatine-fuer-3-7v-li-akkus-usb-c-1a-debo1-3-7li-1-0a-p291398.html?PROVID=2788&gclid=CjwKCAjwuqiiBhBtEiwATgvixBs7NEnjSA-anMGeDcSqRUv3iyiF6OqSwPQXSs3417HQ1tgxBmm97BoCVAsQAvD_BwE&&r=1  - 2.20 €
 - Nokia BL-5CB Akku, oder anderes 3,7V Li-Akku: z.B. Kaufland, https://www.kaufland.de/product/80251321/?kwd&source=pla&sid=38335726&gclid=CjwKCAjwuqiiBhBtEiwATgvixGC7B2KKbPR-eUjCDm_wSEUOnJUUdACBs_II4dgMZ_mDuN4gtLmRhhoCfZUQAvD_BwE  - 6.24 €
 - Jumper-Taster
-- Schiebeschalter
+- Schiebeschalter DPDT
 - Transistoren, Widerstände, LED...
 - Lochrasterplatine
 - Jumperkabel, Lackdraht
