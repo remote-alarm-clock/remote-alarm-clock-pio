@@ -13,10 +13,14 @@
 #define SNOOZE_TIME 600 // in seconds!!
 
 #define BAUDRATE 115200
-#define WIFI_CONNECTION_ATTEMPT_DURATION 15000 // in millis smaller than 500ms steps doesnt make a difference
+#define WIFI_CONNECTION_ATTEMPT_DURATION 150000 // in millis smaller than 500ms steps doesnt make a difference
 
 // Physical configuration
 #define MOTOR_PIN D5
 #define OLED_RESET_PIN D0 // pin 15 -RESET digital signal
 #define SNOOZE_BTN_PIN D7
 #define ALARM_BTN_PIN D6
+
+#ifndef GIT_COMMIT_HASH
+#define GIT_COMMIT_HASH "?"
+#endif

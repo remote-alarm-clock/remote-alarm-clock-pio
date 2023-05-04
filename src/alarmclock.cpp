@@ -20,7 +20,7 @@ AlarmClk::AlarmClk() : console(BAUDRATE), oledDisplay(OLED_RESET_PIN, SNOOZE_TIM
     String password = console.getWifiPasswordFromMemory();
 
     delay(5000);
-    Serial.printf("\n\n==============================\nSIG CLK %s\nCompiled on %s, %s\nMake sure, \\n and \\r\\n are DISABLED, before using commands. This may cause errors (with wifi credentials for example)\n==============================\n\n", SOFTWARE_VERSION, __DATE__, __TIME__);
+    Serial.printf("\n\n==============================\nREMOTE ALARM CLK %s\nCommit %s\nCompiled on %s, %s\nMake sure, \\n and \\r\\n are DISABLED, before using commands. This may cause errors (with wifi credentials for example)\n==============================\n\n", SOFTWARE_VERSION, GIT_COMMIT_HASH, __DATE__, __TIME__);
     Serial.printf("\nTrying to connect to %s with password ***. \nWant to change WiFi credentials? Type (after first attempt): 'ssid:<newSSID>' or 'password:<newPassword>'\n\n Please wait", ssid.c_str());
 
     WiFi.begin(ssid, password);
