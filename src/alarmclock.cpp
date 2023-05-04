@@ -40,13 +40,13 @@ AlarmClk::AlarmClk() : console(BAUDRATE), oledDisplay(OLED_RESET_PIN, SNOOZE_TIM
             // Setup done.. There is no wifi. Show on screen.
             oledDisplay.drawSetupWifiConnection();
             problemWithWifi = true;
-            Serial.println("\nNo connection to Wifi possible. Please make sure, ssid and password are corret!");
+            Serial.println("\nNo connection to Wifi possible. Please make sure, ssid and password are correct!");
             return;
         }
         Serial.print(".");
         oledDisplay.drawWifiConnectionAttemptSymbol(frame % 3);
-        frame++;
-        delay(500);
+        if (((millis() - millisConnectionAttemptStarted) % 500) < 50) frame++;
+        yield();
     }
 
     // Connection successful.
