@@ -54,14 +54,14 @@ AlarmClk::AlarmClk() : console(BAUDRATE), oledDisplay(OLED_RESET_PIN, SNOOZE_TIM
 
     Serial.println(" connected");
 
-    Serial.printf("Firebase Client v%s\n\n", API_KEY);
-
-    /* Assign the api key (required) */
-    config.api_key = API_KEY;
+    Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
 
     /* Assign the user sign in credentials */
     auth.user.email = USER_EMAIL;
     auth.user.password = USER_PASSWORD;
+
+    /* Assign the api key (required) */
+    config.api_key = API_KEY;
 
     /* Assign the RTDB URL (required) */
     config.database_url = DATABASE_URL;
