@@ -10,7 +10,7 @@ class Motor
 public:
     Motor(uint8_t motorPin);
     void changeMotorState(bool enable);
-    void loopMotorFlicker();
+    void motorFlickerTick();
 
 private:
     unsigned int motorPin;

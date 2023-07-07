@@ -3,15 +3,12 @@
 
 #include <Arduino.h>
 //#include <Adafruit_GFX.h>
-#include <Firebase_ESP_Client.h>
 
 #include "config.h"
 #include "console.h"
 #include "oled.h"
 #include "motor.h"
-
-#include <NTPClient.h>
-#include <WiFiUdp.h>
+#include "wlan.h"
 
 class AlarmClk
 {
@@ -26,22 +23,9 @@ private:
     CONSOLE console;
     OLed oledDisplay;
     Motor motor;
+    WLAN wlan;
 
-    WiFiUDP ntpUDP;
-    NTPClient timeClient;
-
-    // Define Firebase data object
-    FirebaseData stream;
-    FirebaseData fbdo;
-    FirebaseAuth auth;
-    FirebaseConfig config;
-    unsigned long sendDataPrevMillis = 0;
-
-    volatile bool dataChanged = false;
-    volatile int lastMessageID = -1;
     bool messageOnScreen = false;
-
-    bool problemWithWifi = false;
 
     // Variables for Stop Function
     unsigned long lastDebounceStopMillis = 0;

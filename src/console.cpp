@@ -9,7 +9,7 @@ CONSOLE::CONSOLE(unsigned long baudrate)
     EEPROM.begin(1024); // Initialize EEPROM to a size of 1kbytes
 }
 
-void CONSOLE::loopUserInput()
+void CONSOLE::userInputTick()
 {
     if (Serial.available() > 0)
     {

@@ -17,7 +17,7 @@ void Motor::changeMotorState(bool enable)
   Serial.printf("Changing state of motor to %s\n", (enable ? "running" : "halted"));
 }
 
-void Motor::loopMotorFlicker()
+void Motor::motorFlickerTick()
 {
   if (lastMotorFlickerChangeMillis != 0 && motorRunning)
   {

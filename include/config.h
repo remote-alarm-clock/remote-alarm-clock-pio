@@ -14,6 +14,7 @@
 
 #define BAUDRATE 115200
 #define WIFI_CONNECTION_ATTEMPT_DURATION 150000 // in millis smaller than 500ms steps doesnt make a difference
+#define FIREBASE_POLLING_INTERVAL 15000 // in millis. How often should we check for new message?
 
 // Physical configuration
 #define MOTOR_PIN D5

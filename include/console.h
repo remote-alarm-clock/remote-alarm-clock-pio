@@ -15,7 +15,7 @@ public:
 
     bool writeLastMessageID(uint32_t lastMessageID);
 
-    void loopUserInput();
+    void userInputTick();
 
 private:
     /**
