@@ -120,12 +120,12 @@ databaseObj_t WLAN::processNewMessagesFromFirebase()
             if (lastMessageID < 0)
             {
                 Serial.println("NewestMessageID is smaller than 0. There has been an error!!");
-                return;
+                return dummyMessage;
             }
             if (!Firebase.RTDB.getJSON(&fbdo, "/clocks/" + (String)CLOCK_ID + "/messages/" + lastMessageID))
             {
                 Serial.printf("Cannot fetch data from Firebase. %s\n", fbdo.errorReason().c_str());
-                return;
+                return dummyMessage;
             }
             FirebaseJson resultingMessage = fbdo.to<FirebaseJson>();
             FirebaseJsonData dat;
