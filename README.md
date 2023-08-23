@@ -15,4 +15,5 @@ Platform IO code for Remote Alarm Clock
 ----------
 # Werkzeugliste
 - Lötkolben
-- 3D-Drcker
+- 3D-Drucker
+- standart Werkzeug für Elektronikarbeiten (Kneifer, Zange, Schraubendreher, etc.)
