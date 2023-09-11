@@ -141,7 +141,7 @@ bool CONSOLE::writeLastMessageID(uint32_t lastMessageID)
     // big endian MSB
     for (int i = 0; i < 4; i++)
     {
-        EEPROM.write(512 + i, lastMessageID >> (3 - i) & 0xFF);
+        EEPROM.write(512 + i, lastMessageID >> ((3 - i) * 8) & 0xFF);
     }
     return EEPROM.commit();
 }
