@@ -10,6 +10,13 @@
 #include <WiFiUdp.h>
 #include <Firebase_ESP_Client.h>
 
+typedef struct databaseObj_t
+{
+    String sender;
+    String text;
+    bool motorStatus;
+    int messageID = -1;
+} databaseObj_t;
 class WLAN
 {
 public:
@@ -25,6 +32,8 @@ public:
 
     void setLastMessageID(int);
     int getLastMessageID();
+    String getConnectedWifiName();
+    bool isWifiConnected();
     bool isProblemWithWifi();
 
 private:
@@ -40,17 +49,13 @@ private:
     databaseObj_t lastMessage;
     databaseObj_t dummyMessage;
 
+    String wifiName;
+    unsigned long millisConnectionAttemptStarted = 0;
+
     int lastMessageID = -1;
     unsigned long sendDataPrevMillis;
     bool problemWithWiFi;
     bool dataChanged;
 };
 
-typedef struct databaseObj_t
-{
-    String sender;
-    String text;
-    bool motorStatus;
-    int messageID = -1;
-} databaseObj_t;
 #endif

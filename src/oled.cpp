@@ -1,8 +1,32 @@
 #include "oled.h"
+#include "alarmclock.h"
 
 OLed::OLed(int oledResetPin, const int snoozeTimeVar) : display(oledResetPin), snoozeTime(snoozeTimeVar)
 {
   display.begin(SSD1306_SWITCHCAPVCC);
+}
+
+void OLed::renderTick()
+{
+  if (AlarmClk::getCurrentStateOfProgram() == WIFI_CONNECTING || AlarmClk::getCurrentStateOfProgram() == WIFI_RECONNECTING)
+  {
+    if ((millis() - millisSinceLastWLANSymbolUpdate) > DISPLAY_FRAMERATE_DELAY)
+    {
+      millisSinceLastWLANSymbolUpdate = millis();
+      drawWifiConnectionAttemptSymbol(wlanFrameNumber);
+      wlanFrameNumber++;
+      wlanFrameNumber %= 3;
+    }
+  }
+  if (AlarmClk::getCurrentStateOfProgram() == SLEEP)
+  {
+    if ((millis() - millisSinceLastSnoozeDisplayUpdate) > DISPLAY_FRAMERATE_DELAY && AlarmClk::getSnoozeTimerReenableMillis() != 0)
+    {
+      millisSinceLastSnoozeDisplayUpdate = millis();
+      // Update display showing counter timer.
+      updateCounterInLeftCorner(AlarmClk::getSnoozeTimerReenableMillis());
+    }
+  }
 }
 
 void OLed::clearCounterInLeftCorner()

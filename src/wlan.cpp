@@ -1,4 +1,5 @@
 #include "wlan.h"
+#include "alarmclock.h"
 
 #include <addons/TokenHelper.h> // Provide the token generation process info.
 #include <addons/RTDBHelper.h>  // Provide the RTDB payload printing info and other helper functions.
@@ -7,35 +8,26 @@ WLAN::WLAN() : timeClient(ntpUDP), problemWithWiFi(false)
 {
 }
 
+bool WLAN::isWifiConnected()
+{
+    return WiFi.status() != WL_CONNECTED;
+}
+
 void WLAN::attemptWifiConnection(String ssid, String password, OLed &oledPtr)
 {
-
+    wifiName = ssid;
     WiFi.begin(ssid, password);
-    WiFi.setAutoReconnect(true);
+    WiFi.setAutoReconnect(false);
 
-    // Try to connect
-    // If connection after 5 seconds not successful, display on screen to change pw, break this routine
-    // Clock should then be restarted for changes to work properly (boolean or something?)
+    oledPtr.drawSetupWifiConnection();
 
-    unsigned long millisConnectionAttemptStarted = millis();
-    int frame = 0;
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        // Display connecting animation
-        if (millis() > millisConnectionAttemptStarted + WIFI_CONNECTION_ATTEMPT_DURATION)
-        {
-            // Setup done.. There is no wifi. Show on screen.
-            oledPtr.drawSetupWifiConnection();
-            problemWithWiFi = true;
-            Serial.println("\nNo connection to Wifi possible. Please make sure, ssid and password are correct!");
-            return;
-        }
-        Serial.print(".");
-        oledPtr.drawWifiConnectionAttemptSymbol(frame % 3);
-        if (((millis() - millisConnectionAttemptStarted) % 500) < 50)
-            frame++;
-        yield();
-    }
+    // Reset timeout counter for WiFi connection.
+    millisConnectionAttemptStarted = millis();
+}
+
+String WLAN::getConnectedWifiName()
+{
+    return wifiName;
 }
 
 void WLAN::beginInternetServices()
@@ -58,7 +50,7 @@ void WLAN::beginInternetServices()
     Firebase.begin(&config, &auth);
 
     // Comment or pass false value when WiFi reconnection will control by your code or third party library
-    Firebase.reconnectWiFi(true);
+    Firebase.reconnectWiFi(false);
 
     // // Recommend for ESP8266 stream, adjust the buffer size to match your stream data size
     // stream.setBSSLBufferSize(2048 /* Rx in bytes, 512 - 16384 */, 512 /* Tx in bytes, 512 - 16384 */);
@@ -78,7 +70,23 @@ int WLAN::getLastMessageID()
 
 void WLAN::networkTick()
 {
-    timeClient.update();
+    if (AlarmClk::getCurrentStateOfProgram() == WIFI_CONNECTING || AlarmClk::getCurrentStateOfProgram() == WIFI_RECONNECTING)
+    {
+        if (!isWifiConnected())
+        {
+            if (millis() > millisConnectionAttemptStarted + WIFI_CONNECTION_ATTEMPT_DURATION)
+            {
+                // Setup done.. There is no wifi. Show on screen.
+                problemWithWiFi = true;
+                Serial.println("\nNo connection to Wifi possible. Please make sure, ssid and password are correct!");
+                return;
+            }
+        }
+    }
+    else
+    {
+        timeClient.update();
+    }
 }
 
 void WLAN::fetchNewMessagesFromFirebase()
